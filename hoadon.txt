@@ -1,0 +1,50 @@
+HD0001;KH01;NV01;Ban bong x3;Qua mit x3;201000.00
+HD0002;KH02;NV02;San bong mini x3;Cau cau ca x1;Bup be Barbie x3;720000.00
+HD0003;KH03;NV03;Gao ST25 x3;Dau an Chin Su x2;Qua cam x3;505000.00
+HD0004;KH04;NV04;Sua tuoi Vinamilk x3;Xep hinh Lego x2;Duong tinh x3;516000.00
+HD0005;KH05;NV05;Gia vi Aji x1;17000.00
+HD0006;KH06;NV06;Thit bo Ba Ria x3;Xep hinh Lego x2;Mi Hao Hao tom chua x2;1170000.00
+HD0007;KH07;NV07;Khuon hinh x2;Gia vi Aji x2;Oto mo hinh x3;534000.00
+HD0008;KH08;NV08;Sua chua Vinamilk x2;34000.00
+HD0009;KH09;NV09;Dau an Ong Tho x2;Thit heo Ba Ria x1;Gao ST25 x2;450000.00
+HD0010;KH10;NV10;Trung vit x2;Gao Hom Nay x2;Gao ST25 x3;646000.00
+HD0011;KH11;NV11;Khuon hinh x1;25000.00
+HD0012;KH12;NV12;Mi Hao Hao tom chua x1;Robot lap rap x3;855000.00
+HD0013;KH13;NV13;Thu bong lon x3;Mi Hao Hao tom chua x3;Rau cai x2;379000.00
+HD0014;KH14;NV14;Qua tao x2;44000.00
+HD0015;KH15;NV15;Bot Mi Hoang Gia x2;Xe dau keo mo hinh x2;Qua mit x1;428000.00
+HD0016;KH16;NV16;Do choi ghep hinh x3;240000.00
+HD0017;KH17;NV17;Mi tom Hao Hao x1;15000.00
+HD0018;KH18;NV18;Rau xanh tuoi x3;Khuon hinh x1;61000.00
+HD0019;KH19;NV19;Cau cau ca x1;Sua tuoi Organic x1;Tom bac x1;265000.00
+HD0020;KH20;NV20;Gao Hom Nay x3;Sua chua Vinamilk x2;424000.00
+HD0021;KH21;NV21;Do choi ghep hinh x3;Xep hinh Lego x2;Gia vi Aji x2;Oto mo hinh x1;784000.00
+HD0022;KH22;NV22;Pho mai Con Cung x3;Thit bo Ba Ria x2;Rau cai x1;Sung ban tia x3;981000.00
+HD0023;KH23;NV23;Cau cau ca x1;Do choi ghep hinh x1;140000.00
+HD0024;KH24;NV24;Qua tao x2;Qua tao x1;Bot mi Acecook x1;83000.00
+HD0025;KH25;NV25;Trung ga x3;Do choi ghep hinh x3;Qua mit x1;282500.00
+HD0026;KH26;NV26;May bay mo hinh x3;Thu bong lon x3;750000.00
+HD0027;KH27;NV27;Bong tennis x3;Bup be Barbie x1;Trung vit x2;246000.00
+HD0028;KH28;NV28;Khuon hinh x2;Qua cam x2;Sua tuoi Organic x1;Robot lap rap x1;415000.00
+HD0029;KH29;NV29;Xe dau keo mo hinh x1;San bong mini x3;540000.00
+HD0030;KH30;NV30;Rau muong x2;Trung ga x1;33500.00
+HD0031;KH31;NV31;Ca hoi Nauy x3;May bay mo hinh x1;Xe ben mo hinh x2;Duong tinh x2;1454000.00
+HD0032;KH32;NV32;Qua mit x3;Do choi ghep hinh x1;Xep hinh Lego x2;Xe dau keo mo hinh x3;1076000.00
+HD0033;KH33;NV33;Dau an Chin Su x1;35000.00
+HD0034;KH34;NV34;Thu cung bong x2;180000.00
+HD0035;KH35;NV35;Thit heo Ba Ria x3;Ca hoi Nauy x1;710000.00
+HD0036;KH36;NV36;Gao ST25 x2;250000.00
+HD0037;KH37;NV37;Rau xanh tuoi x2;Duong Den x1;Xe dau keo mo hinh x1;Do choi ghep hinh x2;388000.00
+HD0038;KH38;NV38;Khuon hinh x1;Cau cau ca x1;Gao Hom Nay x3;Bup be cong chua x2;715000.00
+HD0039;KH39;NV39;May bay mo hinh x1;Bot mi Acecook x3;Gao Hom Nay x3;Xe dieu khien x3;1281000.00
+HD0040;KH40;NV40;Thu cung bong x3;Ban bong x1;Xe ben mo hinh x2;Dau an Ong Tho x1;640000.00
+HD0041;KH41;NV41;Xe dieu khien x3;Sua chua Vinamilk x1;Qua xoai x3;788000.00
+HD0042;KH42;NV42;Oto mo hinh x3;Robot lap rap x1;730000.00
+HD0043;KH43;NV43;Ca thu x1;Duong tinh x2;174000.00
+HD0044;KH44;NV44;Xe ben mo hinh x1;150000.00
+HD0045;KH45;NV45;Thit bo Ba Ria x3;May bay mo hinh x1;Gao Hom Nay x1;Xe dap dien x3;2710000.00
+HD0046;KH46;NV46;Xe dap dien x3;Mi Hao Hao tom chua x1;Gia vi Aji x3;1716000.00
+HD0047;KH47;NV47;Thu bong lon x2;Gao ST25 x1;325000.00
+HD0048;KH48;NV48;Gao ST25 x3;375000.00
+HD0049;KH49;NV49;Ca thu x1;Mi Hao Hao tom chua x3;175000.00
+HD0050;KH50;NV50;Thit heo Ba Ria x3;Thit bo Ba Ria x2;Thit bo Ba Ria x3;1690000.00
