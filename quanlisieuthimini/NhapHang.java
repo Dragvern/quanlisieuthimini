@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class NhapHang implements Serializable {
+public class NhapHang {
     private String maPN;
     private String maNV;
     private String chiTiet; // danh sach san pham nhap, vi du: "Banh quy x10; Nuoc ngot x5;"

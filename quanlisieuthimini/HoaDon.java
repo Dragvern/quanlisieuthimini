@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class HoaDon implements Serializable {
+public class HoaDon {
     private String maHD;
     private String maKH;
     private String maNV;

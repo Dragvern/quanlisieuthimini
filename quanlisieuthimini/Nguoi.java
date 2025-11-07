@@ -1,12 +1,14 @@
-import java.io.Serializable;
 import java.util.Scanner;
 
-public class Nguoi implements Serializable {
+public abstract class Nguoi implements IThaoTacFile {
     protected String ma;
     protected String hoTen;
     protected String sdt;
+    protected Scanner sc;
 
-    public Nguoi() {}
+    public Nguoi() {
+        sc = new Scanner(System.in);
+    }
 
     public Nguoi(String ma, String hoTen, String sdt) {
         this.ma = ma;
@@ -15,7 +17,6 @@ public class Nguoi implements Serializable {
     }
 
     public void nhap() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ma: ");
         ma = sc.nextLine();
         System.out.print("Nhap ho ten: ");

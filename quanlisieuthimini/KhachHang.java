@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class KhachHang extends Nguoi implements Serializable {
+public class KhachHang extends Nguoi {
     private String diaChi;
 
     public KhachHang() {}
@@ -14,7 +12,7 @@ public class KhachHang extends Nguoi implements Serializable {
     public void nhap() {
         super.nhap();
         System.out.print("Nhap dia chi: ");
-        diaChi = new java.util.Scanner(System.in).nextLine();
+        diaChi = sc.nextLine();
     }
 
     @Override
@@ -25,6 +23,14 @@ public class KhachHang extends Nguoi implements Serializable {
     @Override
     public String toFileString() {
         return super.toFileString() + ";" + diaChi;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
     }
 
     @Override

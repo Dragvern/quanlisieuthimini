@@ -1,9 +1,9 @@
-import java.io.Serializable;
 
-public class NhanVien extends Nguoi implements Serializable {
+public class NhanVien extends Nguoi {
     private String chucVu;
 
-    public NhanVien() {}
+    public NhanVien() {
+    }
 
     public NhanVien(String ma, String hoTen, String sdt, String chucVu) {
         super(ma, hoTen, sdt);
@@ -14,7 +14,7 @@ public class NhanVien extends Nguoi implements Serializable {
     public void nhap() {
         super.nhap();
         System.out.print("Nhap chuc vu: ");
-        chucVu = new java.util.Scanner(System.in).nextLine();
+        chucVu = sc.nextLine();
     }
 
     @Override
@@ -25,6 +25,14 @@ public class NhanVien extends Nguoi implements Serializable {
     @Override
     public String toFileString() {
         return super.toFileString() + ";" + chucVu;
+    }
+
+    public String getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(String chucVu) {
+        this.chucVu = chucVu;
     }
 
     @Override

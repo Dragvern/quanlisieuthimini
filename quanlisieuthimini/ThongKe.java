@@ -1,110 +1,120 @@
 import java.util.*;
 import java.util.regex.*;
+import java.io.*;
 
 public class ThongKe {
 	public static void thongKe(QuanLyCuaHang ql) {
-		Map<String, Integer> imported = new HashMap<>();
-		Map<String, Integer> sold = new HashMap<>();
-
-		double totalImportCost = 0.0;
-		double costOfGoodsSold = 0.0;
-
-		// Parse imports
-		for (NhapHang pn : ql.getDsPhieuNhap()) {
-			String ct = pn.getChiTiet();
-			parseChiTietAndAdd(ct, imported);
-		}
-
-		// Parse sales
-		double totalRevenue = 0;
+		// Tính tổng doanh thu
+		double tongDoanhThu = 0;
+		
+		// Tính doanh thu từ hóa đơn
 		for (HoaDon hd : ql.getDsHoaDon()) {
-			String ct = hd.getChiTiet();
-			parseChiTietAndAdd(ct, sold);
-			totalRevenue += hd.getTongTien();
+			tongDoanhThu += hd.getTongTien();
 		}
-
-		// compute costs based on catalog prices
-		for (Map.Entry<String,Integer> e : imported.entrySet()) {
-			String name = e.getKey();
-			int qty = e.getValue();
-			double cost = findGiaNhap(ql, name);
-			totalImportCost += cost * qty;
-		}
-		for (Map.Entry<String,Integer> e : sold.entrySet()) {
-			String name = e.getKey();
-			int qty = e.getValue();
-			double cost = findGiaNhap(ql, name);
-			costOfGoodsSold += cost * qty;
-		}
-
-		int totalImported = imported.values().stream().mapToInt(Integer::intValue).sum();
-		int totalSold = sold.values().stream().mapToInt(Integer::intValue).sum();
-
-	System.out.println("\n=== THONG KE TONG QUAT ===");
-	System.out.println("Tong so luong nhap: " + totalImported);
-	System.out.println("Tong so luong ban: " + totalSold);
-	System.out.printf("Tong doanh thu (ban): %.2f\n", totalRevenue);
-	System.out.printf("Tong chi phi nhap: %.2f\n", totalImportCost);
-	System.out.printf("Gia von hang ban (COGS): %.2f\n", costOfGoodsSold);
-	System.out.printf("Loi nhuan gop (doanh thu - COGS): %.2f\n", (totalRevenue - costOfGoodsSold));
-
-		// Per-product breakdown
-		Set<String> products = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-		products.addAll(imported.keySet());
-		products.addAll(sold.keySet());
-		// include products from catalog
-		for (SanPham sp : ql.getDsSanPham()) products.add(sp.getTenSP());
-
-	System.out.println("\nChi tiet theo san pham:");
-	System.out.printf("%-30s %-10s %-10s %-10s\n", "San pham", "Nhap", "Ban", "Ton kho");
-		for (String name : products) {
-			int in = imported.getOrDefault(name, 0);
-			int out = sold.getOrDefault(name, 0);
-			int stock = findStock(ql, name);
-			System.out.printf("%-30s %-10d %-10d %-10d\n", name, in, out, stock);
-		}
-		System.out.println();
-	}
-
-	private static double findGiaNhap(QuanLyCuaHang ql, String name) {
-		for (SanPham sp : ql.getDsSanPham()) {
-			if (sp.getTenSP().equalsIgnoreCase(name)) return sp.getGiaNhap();
-		}
-		return 0.0;
-	}
-
-	private static void parseChiTietAndAdd(String ct, Map<String, Integer> map) {
-		if (ct == null) return;
-		String[] items = ct.split(";");
-		Pattern p = Pattern.compile("(.*) x(\\d+)");
-		for (String it : items) {
-			String s = it.trim();
-			if (s.isEmpty()) continue;
-			Matcher m = p.matcher(s);
-			if (m.matches()) {
-				String name = m.group(1).trim();
-				int qty = Integer.parseInt(m.group(2));
-				map.merge(name, qty, Integer::sum);
-			} else {
-				// try to parse trailing number
-				int lastSpace = s.lastIndexOf(' ');
-				if (lastSpace > 0 && lastSpace < s.length()-1) {
+		
+		// Thu thập dữ liệu về số lượng nhập và bán cho từng sản phẩm
+		Map<String, Integer> soLuongNhap = new HashMap<>(); // key = maSP
+		Map<String, Integer> soLuongBan = new HashMap<>();   // key = maSP
+		
+		// Đọc số lượng nhập từ file nhaphang.txt (format: maPN | ngay | maSP | tenSP | +soLuong)
+		try (BufferedReader br = new BufferedReader(new FileReader("nhaphang.txt"))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] parts = line.split("\\|");
+				if (parts.length >= 5) {
+					String maSP = parts[2].trim();
+					String slStr = parts[4].trim().replace("+", "");
 					try {
-						int qty = Integer.parseInt(s.substring(lastSpace+1).trim());
-						String name = s.substring(0, lastSpace).trim();
-						map.merge(name, qty, Integer::sum);
-					} catch (NumberFormatException ex) {
-						// ignore
+						int soLuong = Integer.parseInt(slStr);
+						soLuongNhap.merge(maSP, soLuong, Integer::sum);
+					} catch (NumberFormatException e) {
+						// Bỏ qua dòng lỗi
 					}
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Khong doc duoc file nhaphang.txt");
+		}
+		
+		// Đếm số lượng bán từ hóa đơn (sử dụng tên sản phẩm)
+		for (HoaDon hd : ql.getDsHoaDon()) {
+			String chiTiet = hd.getChiTiet();
+			parseChiTietHoaDon(chiTiet, soLuongBan, ql);
+		}
+		
+		// Tính tiền vốn và lợi nhuận dựa trên sản phẩm đã bán
+		double tongTienVon = 0;
+		for (SanPham sp : ql.getDsSanPham()) {
+			String maSP = sp.getMaSP();
+			int slBan = soLuongBan.getOrDefault(maSP, 0);
+			tongTienVon += sp.getGiaNhap() * slBan; // Vốn = giá nhập × số lượng đã bán
+		}
+		
+		// Lợi nhuận = Doanh thu - Vốn (của hàng đã bán)
+		double loiNhuan = tongDoanhThu - tongTienVon;
+
+		// Hiển thị thống kê tổng quan
+		System.out.println("\n========== THONG KE TONG QUAT ==========");
+		System.out.println("Tong so san pham: " + ql.getDsSanPham().size());
+		System.out.println("Tong so khach hang: " + ql.getDsKhachHang().size());
+		System.out.println("Tong so nhan vien: " + ql.getDsNhanVien().size());
+		System.out.println("Tong so hoa don: " + ql.getDsHoaDon().size());
+		System.out.printf("Tong tien von (hang da ban): %,.0f VND\n", tongTienVon);
+		System.out.printf("Tong doanh thu: %,.0f VND\n", tongDoanhThu);
+		System.out.printf("Loi nhuan: %,.0f VND\n", loiNhuan);
+		
+		// Thống kê sản phẩm
+		System.out.println("\n========== THONG KE SAN PHAM ==========");
+		System.out.printf("%-10s %-30s %-12s %-12s %-12s\n", 
+			"Ma SP", "Ten SP", "SL Nhap", "SL Ban", "Ton Kho");
+		System.out.println("--------------------------------------------------------------------------------");
+		
+		for (SanPham sp : ql.getDsSanPham()) {
+			String maSP = sp.getMaSP();
+			String tenSP = sp.getTenSP();
+			int slNhap = soLuongNhap.getOrDefault(maSP, 0);
+			int slBan = soLuongBan.getOrDefault(maSP, 0);
+			int tonKho = sp.getSoLuong();
+			
+			System.out.printf("%-10s %-30s %-12d %-12d %-12d\n", 
+				maSP, tenSP, slNhap, slBan, tonKho);
+		}
+		System.out.println("==========================================\n");
+	}
+	
+	// Phương thức phân tích chi tiết hóa đơn (dùng tên sản phẩm) và chuyển sang mã SP
+	private static void parseChiTietHoaDon(String chiTiet, Map<String, Integer> map, QuanLyCuaHang ql) {
+		if (chiTiet == null || chiTiet.trim().isEmpty()) return;
+		
+		// Xử lý format: "Banh quy x10; Nuoc ngot x5;"
+		String[] items = chiTiet.split(";");
+		Pattern pattern = Pattern.compile("(.+?)\\s*x\\s*(\\d+)", Pattern.CASE_INSENSITIVE);
+		
+		for (String item : items) {
+			String s = item.trim();
+			if (s.isEmpty()) continue;
+			
+			Matcher matcher = pattern.matcher(s);
+			if (matcher.find()) {
+				String tenSP = matcher.group(1).trim();
+				int soLuong = Integer.parseInt(matcher.group(2));
+				
+				// Tìm mã sản phẩm từ tên sản phẩm
+				String maSP = findMaSPByTen(ql, tenSP);
+				if (maSP != null) {
+					map.merge(maSP, soLuong, Integer::sum);
 				}
 			}
 		}
 	}
-
-	private static int findStock(QuanLyCuaHang ql, String name) {
+	
+	// Tìm mã sản phẩm từ tên sản phẩm
+	private static String findMaSPByTen(QuanLyCuaHang ql, String tenSP) {
 		for (SanPham sp : ql.getDsSanPham()) {
-			if (sp.getTenSP().equalsIgnoreCase(name)) return sp.getSoLuong();
+			if (sp.getTenSP().equalsIgnoreCase(tenSP)) {
+				return sp.getMaSP();
+			}
 		}
-		return 0;
+		return null;
 	}
 }

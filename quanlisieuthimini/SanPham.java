@@ -1,12 +1,13 @@
 import java.util.Scanner;
 
-public class SanPham {
+public class SanPham implements IThaoTacFile {
     protected String maSP;
     protected String tenSP;
     protected double giaBan;
     protected double giaNhap;
     protected int soLuong;
     protected String loaiSP;
+    protected Scanner sc = new Scanner(System.in);
 
     public SanPham() {}
 
@@ -19,10 +20,9 @@ public class SanPham {
         this.loaiSP = loaiSP;
     }
 
-    @SuppressWarnings("resource")
-    public void nhapThongTin() {
-        Scanner sc = new Scanner(System.in);
-            System.out.print("Nhap ma san pham: ");
+
+    public void nhap() {
+        System.out.print("Nhap ma san pham: ");
         maSP = sc.nextLine();
             System.out.print("Nhap ten san pham: ");
         tenSP = sc.nextLine();
@@ -34,7 +34,8 @@ public class SanPham {
         soLuong = Integer.parseInt(sc.nextLine());
     }
 
-    public void xuatThongTin() {
+    public void xuat() {
+        System.out.printf("%-10s %-20s %-15s %-15s %-10s %-10s\n", "Ma SP", "Ten SP", "Gia Nhap", "Gia Ban", "So Luong", "Loai SP");
         System.out.printf("%-10s %-20s %-15s %-15s %-10d %-10s\n", maSP, tenSP, fmtVND(giaNhap), fmtVND(giaBan), soLuong, loaiSP);
     }
 
@@ -80,8 +81,8 @@ class ThucPham extends SanPham {
     }
 
     @Override
-    public void nhapThongTin() {
-        super.nhapThongTin();
+    public void nhap() {
+        super.nhap();
         this.loaiSP = "Thuc pham";
     }
 }
@@ -98,8 +99,8 @@ class DoChoi extends SanPham {
     }
 
     @Override
-    public void nhapThongTin() {
-        super.nhapThongTin();
+    public void nhap() {
+        super.nhap();
         this.loaiSP = "Do choi";
     }
 }
